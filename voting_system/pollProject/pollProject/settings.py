@@ -25,6 +25,7 @@ SECRET_KEY = 'django-insecure-&(e6%m5#p*#9p@7ym5rghby^j=@rn^5ln+$z)#$l#5+b+zgmk_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+import os
 ALLOWED_HOSTS = []
 
 
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pollApp',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +56,7 @@ ROOT_URLCONF = 'pollProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [od.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
