@@ -1,0 +1,15 @@
+# This file tells Render how to build and deploy your application.
+# It specifies the Python version and the build and start commands.
+
+# The Python version to use. This is crucial for resolving the Pillow build error.
+python:
+  version: 3.12.4
+
+# The build command to install dependencies from requirements.txt
+build:
+  command: pip install -r requirements.txt
+
+# The start command for your Gunicorn web server
+start:
+  command: gunicorn --bind 0.0.0.0:8000 your_project_name.wsgi:application
+

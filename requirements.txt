@@ -86,7 +86,7 @@ oauthlib==3.2.0
 packaging==25.0
 passlib==1.7.4
 phonenumberslite==9.0.10
-pillow==10.3.0
+pillow==10.4.0
 prompt_toolkit==3.0.51
 proto-plus==1.26.1
 protobuf==5.29.5
@@ -143,3 +143,4 @@ websockets==15.0.1
 whitenoise==6.6.0
 zipp==1.0.0
 zope.interface==5.4.0
+
