@@ -86,7 +86,7 @@ oauthlib==3.2.0
 packaging==25.0
 passlib==1.7.4
 phonenumberslite==9.0.10
-pillow==10.4.0
+pillow==10.3.0
 prompt_toolkit==3.0.51
 proto-plus==1.26.1
 protobuf==5.29.5
@@ -126,7 +126,7 @@ stripe==12.3.0
 tomli==2.2.1
 tornado==6.1
 tqdm==4.67.1
-Twisted==22.1.0
+Twisted==24.3.0
 typing-inspection==0.4.1
 typing_extensions==4.14.1
 tzdata==2025.2
@@ -142,5 +142,4 @@ wcwidth==0.2.13
 websockets==15.0.1
 whitenoise==6.6.0
 zipp==1.0.0
-zope.interface==5.4.0
-pillow==10.3.0
+zope.interface==6.4.0
