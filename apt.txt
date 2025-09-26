@@ -2,4 +2,5 @@ libgirepository1.0-dev
 libcurl4-gnutls-dev
 build-essential
 python3-dev
+libcairo2-dev
 ```eof
