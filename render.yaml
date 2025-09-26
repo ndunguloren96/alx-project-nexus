@@ -1,14 +1,25 @@
-# This file tells Render how to build and deploy your application.
-# It specifies the Python version and the build and start commands.
+services:
+- type: web
+  name: pollproject-service
+  env: python
+  
+  # 1. Ensure a stable Python version
+  python:
+    version: 3.12.4
 
-# The Python version to use. This is crucial for resolving the Pillow build error.
-python:
-  version: 3.12.4
+  # 2. MANDATORY FIX for cython_sources: Install system dependencies (build-essential, SSL, JPEG, Zlib)
+  # These are needed to compile packages like Pillow, Twisted, and Cryptography when wheels fail.
+  build:
+    command: |
+      sudo apt-get update && \
+      sudo apt-get install -y build-essential libssl-dev libffi-dev libjpeg-dev zlib1g-dev python3-dev && \
+      pip install -r requirements.txt
 
-# The build command to install dependencies from requirements.txt
-build:
-  command: pip install -r requirements.txt
+  # 3. MANDATORY FIX for Runtime: Correct Gunicorn entry point
+  # Assumes 'pollProject' is the inner Django settings directory containing wsgi.py
+  start:
+    command: gunicorn --bind 0.0.0.0:8000 pollProject.wsgi:application
+    
+  # Health check is recommended for Render
+  healthCheckPath: /
 
-# The start command for your Gunicorn web server
-start:
-  command: gunicorn --bind 0.0.0.0:8000 pollProject.wsgi:application
