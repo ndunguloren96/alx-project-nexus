@@ -11,5 +11,4 @@ build:
 
 # The start command for your Gunicorn web server
 start:
-  command: gunicorn --bind 0.0.0.0:8000 your_project_name.wsgi:application
-
+  command: gunicorn --bind 0.0.0.0:8000 pollProject.wsgi:application
