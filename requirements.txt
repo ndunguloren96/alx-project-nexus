@@ -94,7 +94,7 @@ psutil==5.9.0
 psycopg2-binary==2.9.9
 pyasn1==0.6.1
 pyasn1-modules==0.2.1
-pycurl==7.45.2  # Updated from 7.44.1 (Final likely culprit)
+pycurl==7.45.2
 pydantic==2.11.7
 pydantic-settings==2.10.1
 pydantic_core==2.33.2
@@ -111,7 +111,7 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 python-jose==3.5.0
 pytz==2023.3.post1
-PyYAML==5.4.1
+PyYAML==6.0.1  # <-- Updated
 redis==6.4.0
 requests==2.25.1
 rsa==4.9.1
