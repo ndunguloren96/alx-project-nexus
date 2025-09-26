@@ -62,7 +62,7 @@ h11==0.16.0
 httplib2==0.20.2
 httptools==0.6.4
 hyperlink==21.0.0
-idna==3.3
+idna==3.7  # <-- FIXED: Updated for compatibility with modern requests/anyio
 importlib-metadata==4.6.4
 incremental==21.3.0
 inflection==0.5.1
@@ -92,8 +92,8 @@ proto-plus==1.26.1
 protobuf==5.29.5
 psutil==5.9.0
 psycopg2-binary==2.9.9
-pyasn1==0.5.1  # <-- FIXED: Compatible with pyasn1-modules
-pyasn1-modules==0.4.0  # <-- FIXED: Compatible with pyasn1
+pyasn1==0.5.1
+pyasn1-modules==0.4.0
 pycurl==7.45.2
 pydantic==2.11.7
 pydantic-settings==2.10.1
@@ -113,7 +113,7 @@ python-jose==3.5.0
 pytz==2023.3.post1
 PyYAML==6.0.1
 redis==6.4.0
-requests==2.25.1
+requests==2.32.3  # <-- FIXED: Updated to resolve idna conflict
 rsa==4.9.1
 SecretStorage==3.3.1
 service-identity==18.1.0
