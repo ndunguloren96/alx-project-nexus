@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&(e6%m5#p*#9p@7ym5rghby^j=@rn^5ln+$z)#$l#5+b+zgmk_
 DEBUG = True
 
 import os
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["alx-project-nexus-poll.onrender.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
