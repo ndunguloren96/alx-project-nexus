@@ -18,7 +18,8 @@ services:
   # 3. FIX for Runtime: Correct Gunicorn entry point
   # Assumes 'pollProject' is the inner Django settings directory containing wsgi.py
   start:
-    command: gunicorn --bind 0.0.0.0:8000 pollProject.pollProject.wsgi:application
+    command: gunicorn pollProject.pollProject.wsgi:application --chdir pollProject
+
     
   # Health check is recommended for Render
   healthCheckPath: /
