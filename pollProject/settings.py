@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-&(e6%m5#p*#9p@7ym5rghby^j=@rn^5ln+$z)#$l#5+b+zgmk_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 import os
 ALLOWED_HOSTS = ["alx-project-nexus-poll.onrender.com", "localhost", "127.0.0.1"]
@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'pollApp',
     'landingPage',
 ]
