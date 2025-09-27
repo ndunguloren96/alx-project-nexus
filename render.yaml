@@ -3,25 +3,17 @@ services:
   name: pollproject-service
   env: python
   
-  #  Ensure a stable Python version
   python:
     version: 3.12.4
 
-  # 2. Install system dependencies (build-essential, SSL, JPEG, Zlib)
-  # These are needed to compile packages like Pillow, Twisted, and Cryptography when wheels fail.
   build:
     command: |
       sudo apt-get update && \
       sudo apt-get install -y build-essential libssl-dev libffi-dev libjpeg-dev zlib1g-dev python3-dev && \
       pip install -r requirements.txt
 
-  # 3. FIX for Runtime: Correct Gunicorn entry point
-  # Assumes 'pollProject' is the inner Django settings directory containing wsgi.py
   start:
-    command: gunicorn pollProject.pollProject.wsgi:application --chdir pollProject --bind 0.0.0.0:$PORT
+    command: gunicorn pollProject.wsgi:application --chdir pollProject --bind 0.0.0.0:$PORT
 
-
-    
-  # Health check is recommended for Render
   healthCheckPath: /
 
