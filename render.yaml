@@ -1,19 +1,10 @@
 services:
-- type: web
-  name: pollproject-service
-  env: python
-  
-  python:
-    version: 3.12.4
-
-  build:
-    command: |
-      sudo apt-get update && \
-      sudo apt-get install -y build-essential libssl-dev libffi-dev libjpeg-dev zlib1g-dev python3-dev && \
-      pip install -r requirements.txt
-
-  start:
-    command: gunicorn pollProject.wsgi:application --bind 0.0.0.0:$PORT
-
-  healthCheckPath: /
+  - type: web
+    name: poll-project
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: >
+      python manage.py migrate &&
+      python create_initial_superuser.py &&
+      gunicorn pollProject.wsgi:application --chdir pollProject --bind 0.0.0.0:$PORT
 
