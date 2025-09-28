@@ -7,10 +7,12 @@ For more information on this file, see
 https://docs.djangoproject.com/en/4.2/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/4.2/ref/settings/
+https://docs.djangoproject.com/en/4.2/ref/settings/#values
 """
 
 from pathlib import Path
+import os
+import dj_database_url # <--- NEW IMPORT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&(e6%m5#p*#9p@7ym5rghby^j=@rn^5ln+$z)#$l#5+b+zgmk_'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-&(e6%m5#p*#9p@7ym5rghby^j=@rn^5ln+$z)#$l#5+b+zgmk_') # <--- RECOMMENDED: Move SECRET_KEY to ENV
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False') == 'True' # <--- RECOMMENDED: Control DEBUG via ENV
 
-import os
 ALLOWED_HOSTS = ["alx-project-nexus-poll.onrender.com", "localhost", "127.0.0.1"]
 
 
@@ -77,12 +78,35 @@ WSGI_APPLICATION = 'pollProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# =========================================================================
+# 🚀 CRITICAL CHANGE: Use external PostgreSQL on Render, fall back to SQLite
+# =========================================================================
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+    # Ensure SSL is used for external connections if required (Render often handles this, but good to be explicit)
+    if 'postgres' in DATABASES['default']['ENGINE']:
+        DATABASES['default']['OPTIONS'] = {
+            'sslmode': 'require'
+        }
+else:
+    # Fallback to SQLite for local development (like on your WSL2 environment)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    
+# =========================================================================
 
 
 # Password validation
@@ -120,11 +144,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles') # <--- Recommended to add for future media files
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
