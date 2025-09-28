@@ -80,6 +80,13 @@ The Poll Project is a Django-based web application that allows users to create a
 3.  **Access the Admin Panel:**
     Navigate to `http://127.0.0.1:8000/admin/` and log in with the superuser credentials you created.
 
+## API Documentation
+
+This project provides API documentation using Swagger and ReDoc. You can access the documentation at the following URLs:
+
+*   **Swagger UI:** [http://127.0.0.1:8000/api/docs/](http://127.0.0.1:8000/api/docs/)
+*   **ReDoc:** [http://127.0.0.1:8000/redoc/](http://127.0.0.1:8000/redoc/)
+
 ## Project Structure
 
 ```
@@ -97,7 +104,7 @@ alx-project-nexus/
     │   ├── __init__.py
     │   ├── admin.py
     │   ├── apps.py
-    │   ├── models.py         # No models defined
+    │   ├── models.py         
     │   ├── tests.py
     │   ├── urls.py           # Defines URL patterns for the landing page
     │   └── views.py          # Renders the landing page
@@ -122,7 +129,7 @@ alx-project-nexus/
         │   └── index.html    # Landing page content
         ├── partials/
         │   └── _navbar.html  # Navigation bar partial
-        └── polls/
+        └── polls
             ├── detail.html   # Displays poll question and choices
             ├── index.html    # Lists latest poll questions
             └── results.html  # Displays poll results
