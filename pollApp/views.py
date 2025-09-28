@@ -1,40 +1,36 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse,  HttpResponseRedirect
-from django.template import loader
-from django.urls import reverse
-from django.http import Http404
-
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .models import Question, Choice
+from .serializers import QuestionSerializer, ChoiceSerializer
 
-# Get questions and display those questions (function)
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list' : latest_question_list}
-    return  render(request, 'polls/index.html', context)
+class QuestionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows questions to be viewed or edited.
+    """
+    queryset = Question.objects.all().order_by('-pub_date')
+    serializer_class = QuestionSerializer
 
-# Showing question and choices
-def detail(request, question_id):
-    question = Question.objects.get(pk = question_id)
-    try:
-        question = Question.objects.get(pk = question_id)
-    except Question.DoesNotExist:
-         raise  Http404('Question does not exist')
-    return render(request, 'polls/detail.html', {'question' : question})
+    @action(detail=True, methods=['post'])
+    def vote(self, request, pk=None):
+        """
+        Vote for a choice on a question.
+        """
+        question = self.get_object()
+        try:
+            choice_id = request.data['choice']
+            selected_choice = question.choice_set.get(pk=choice_id)
+        except (KeyError, Choice.DoesNotExist):
+            return Response({'error': 'Invalid choice.'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            selected_choice.votes += 1
+            selected_choice.save()
+            return Response(QuestionSerializer(question).data)
 
-#Get question and display results
-def results(request, question_id):
-    question = get_object_or_404(Question, pk = question_id)
-    return render(request, 'polls/results.html', {'question' : question})
+class ChoiceViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows choices to be viewed or edited.
+    """
+    queryset = Choice.objects.all()
+    serializer_class = ChoiceSerializer
 
-#Vote for a question choice
-def vote(request, question_id):
-    question = get_object_or_404(Question, pk = question_id)
-    try:
-        selected_choice = question.choice_set.get(pk = request.POST['choice'])
-    except (keyError, Choice.DoesNotExist):
-        return render(request, 'polls/detail.html', {'question': question, 'error_message': 'You did not select a choice.'})
-
-    else:
-         selected_choice.votes += 1
-         selected_choice.save()
-         return HttpResponseRedirect(reverse('polls:results', args = (question.id,)))

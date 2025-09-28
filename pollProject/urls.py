@@ -21,7 +21,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('landingPage.urls')),
-    path('polls/', include('pollApp.urls')),
+    path('api/', include('pollApp.urls')),
     # API Schema
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # API Docs
