@@ -2,9 +2,12 @@ services:
   - type: web
     name: poll-project
     env: python
-    buildCommand: "pip install -r requirements.txt && python manage.py collectstatic --noinput"
-    startCommand: >
-      python manage.py migrate &&
-      python create_initial_superuser.py --noinput || true &&
-      gunicorn pollProject.wsgi:application --chdir pollProject --bind 0.0.0.0:$PORT
 
+    buildCommand: >
+      pip install -r requirements.txt && 
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate --noinput &&
+      python create_initial_superuser.py
+      
+    # The startCommand should ONLY run the long-running process (Gunicorn).
+    startCommand: gunicorn pollProject.wsgi:application --chdir pollProject --bind 0.0.0.0:$PORT
